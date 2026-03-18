@@ -24,7 +24,7 @@ if st.button("Generate Bill"):
     }
 
     response = requests.post(
-        "http://127.0.0.1:8000/generate_bill",
+        "https://your-backend.onrender.com/generate_bill",
         json=payload
     )
 
