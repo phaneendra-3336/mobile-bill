@@ -23,32 +23,36 @@ if st.button("Generate Bill"):
         "texts": texts
     }
 
-    response = requests.post(
-        "https://your-backend.onrender.com/generate_bill",
-        json=payload
-    )
+    try:
+        response = requests.post(
+            "https://mobile-bill-backend.onrender.com/generate_bill",  # ✅ your real URL
+            json=payload
+        )
 
-    result = response.json()
+        result = response.json()
 
-    st.subheader("Customer Bill")
+        st.subheader("Customer Bill")
 
-    st.write("Name:", result["Customer Name"])
-    st.write("Mobile:", result["Mobile Number"])
-    st.write("City:", result["City"])
-    st.write("Date:", result["Date"])
+        st.write("Name:", result["Customer Name"])
+        st.write("Mobile:", result["Mobile Number"])
+        st.write("City:", result["City"])
+        st.write("Date:", result["Date"])
 
-    st.markdown("---")
+        st.markdown("---")
 
-    st.write(f"Base Charge: ${result['Base Charge']:.2f}")
+        st.write(f"Base Charge: ${result['Base Charge']:.2f}")
 
-    if result["Extra Minutes Charge"] > 0:
-        st.write(f"Extra Minutes Charge: ${result['Extra Minutes Charge']:.2f}")
+        if result["Extra Minutes Charge"] > 0:
+            st.write(f"Extra Minutes Charge: ${result['Extra Minutes Charge']:.2f}")
 
-    if result["Extra Text Charge"] > 0:
-        st.write(f"Extra Text Charge: ${result['Extra Text Charge']:.2f}")
+        if result["Extra Text Charge"] > 0:
+            st.write(f"Extra Text Charge: ${result['Extra Text Charge']:.2f}")
 
-    st.write(f"Call Center Price: ${result['Call Center Price']:.2f}")
-    st.write(f"Tax: ${result['Tax']:.2f}")
+        st.write(f"Call Center Price: ${result['Call Center Price']:.2f}")
+        st.write(f"Tax: ${result['Tax']:.2f}")
 
-    st.markdown("Total Bill")
-    st.success(f"${result['Total Bill']:.2f}")
+        st.markdown("Total Bill")
+        st.success(f"${result['Total Bill']:.2f}")
+
+    except:
+        st.error("Backend not reachable. Please try again.")
